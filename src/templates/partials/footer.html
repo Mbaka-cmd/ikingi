@@ -7,23 +7,23 @@
     <div>
       <p class="footer-heading">Quick links</p>
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/academics.html">Academics</a></li>
-        <li><a href="/boarding.html">Boarding</a></li>
-        <li><a href="/admissions.html">Admissions</a></li>
-        <li><a href="/gallery.html">Gallery</a></li>
-        <li><a href="/news.html">News</a></li>
-        <li><a href="/contact.html">Contact</a></li>
+        <li><a href="{{ base_path }}/">Home</a></li>
+        <li><a href="{{ base_path }}/about.html">About</a></li>
+        <li><a href="{{ base_path }}/academics.html">Academics</a></li>
+        <li><a href="{{ base_path }}/boarding.html">Boarding</a></li>
+        <li><a href="{{ base_path }}/admissions.html">Admissions</a></li>
+        <li><a href="{{ base_path }}/gallery.html">Gallery</a></li>
+        <li><a href="{{ base_path }}/news.html">News</a></li>
+        <li><a href="{{ base_path }}/contact.html">Contact</a></li>
       </ul>
     </div>
     <div>
       <p class="footer-heading">Admissions</p>
       <ul>
-        <li><a href="/admissions.html#how-to-apply">How to apply</a></li>
-        <li><a href="/admissions.html#requirements">Requirements</a></li>
-        <li><a href="/admissions.html#fees">Fees</a></li>
-        <li><a href="/resources.html">Downloads</a></li>
+        <li><a href="{{ base_path }}/admissions.html#how-to-apply">How to apply</a></li>
+        <li><a href="{{ base_path }}/admissions.html#requirements">Requirements</a></li>
+        <li><a href="{{ base_path }}/admissions.html#fees">Fees</a></li>
+        <li><a href="{{ base_path }}/resources.html">Downloads</a></li>
       </ul>
     </div>
     <div>
@@ -41,6 +41,6 @@
   </div>
   <div class="container footer-bottom">
     <p>&copy; {{ year }} {{ school.name }}</p>
-    <p><a href="/privacy.html">Privacy policy</a> · <a href="/privacy.html#accessibility">Accessibility</a> · Website by Adalyn Technologies</p>
+    <p><a href="{{ base_path }}/privacy.html">Privacy policy</a> Â· <a href="{{ base_path }}/privacy.html#accessibility">Accessibility</a> Â· Website by Adalyn Technologies</p>
   </div>
 </footer>

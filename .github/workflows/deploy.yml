@@ -1,4 +1,4 @@
-name: Build and Deploy Ikingi Website
+﻿name: Build and Deploy Ikingi Website
 
 on:
   push:
@@ -18,6 +18,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      SITE_BASE_PATH: /ikingi
 
     steps:
       - name: Checkout repository
@@ -41,6 +44,7 @@ jobs:
         run: |
           test -f dist/index.html
           test -f dist/404.html
+          test -f dist/robots.txt
           echo "Ikingi website build verified."
 
       - name: Configure GitHub Pages

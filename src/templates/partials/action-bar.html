@@ -1,5 +1,5 @@
 <div class="action-bar" role="region" aria-label="Quick actions">
   {% if school.tel_href %}<a href="{{ school.tel_href }}">Call</a>{% endif %}
   {% if school.wa_href %}<a href="{{ school.wa_href }}" rel="noopener" target="_blank">WhatsApp</a>{% endif %}
-  <a class="is-primary" href="/admissions.html#how-to-apply">Apply</a>
+  <a class="is-primary" href="{{ base_path }}/admissions.html#how-to-apply">Apply</a>
 </div>

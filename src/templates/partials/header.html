@@ -3,7 +3,7 @@
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
-    <a class="brand" href="/" aria-label="{{ school.name }} — home">
+    <a class="brand" href="{{ base_path }}/" aria-label="{{ school.name }} â€” home">
       {% if school.logo %}
       <img class="brand-logo" src="{{ school.logo }}" alt="" width="48" height="48">
       {% endif %}
@@ -14,8 +14,8 @@
     </a>
     {% include "templates/partials/navigation.html" %}
     <div class="header-cta">
-      <a class="btn btn-outline btn-sm header-contact" href="/contact.html">Contact</a>
-      <a class="btn btn-accent btn-sm" href="/admissions.html#how-to-apply"><span class="apply-long">Apply now</span><span class="apply-short">Apply</span></a>
+      <a class="btn btn-outline btn-sm header-contact" href="{{ base_path }}/contact.html">Contact</a>
+      <a class="btn btn-accent btn-sm" href="{{ base_path }}/admissions.html#how-to-apply"><span class="apply-long">Apply now</span><span class="apply-short">Apply</span></a>
     </div>
   </div>
 </header>

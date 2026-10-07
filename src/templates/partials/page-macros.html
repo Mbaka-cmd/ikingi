@@ -45,8 +45,8 @@
     <div class="btn-row">
       {% if school.tel_href %}<a class="btn btn-primary" href="{{ school.tel_href }}">Call school</a>{% endif %}
       {% if school.wa_href %}<a class="btn btn-primary" href="{{ school.wa_href }}" target="_blank" rel="noopener">Chat on WhatsApp</a>{% endif %}
-      <a class="btn btn-outline" href="/contact.html">Contact school</a>
-      <a class="btn btn-outline" href="/admissions.html">View admissions</a>
+      <a class="btn btn-outline" href="{{ base_path }}/contact.html">Contact school</a>
+      <a class="btn btn-outline" href="{{ base_path }}/admissions.html">View admissions</a>
     </div>
   </div>
 </section>

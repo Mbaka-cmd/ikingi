@@ -1,19 +1,19 @@
 {
   "main": [
     {"label": "Home", "href": "/"},
-    {"label": "About", "href": "/about.html"},
-    {"label": "Academics", "href": "/academics.html"},
-    {"label": "Boarding", "href": "/boarding.html"},
-    {"label": "Admissions", "href": "/admissions.html", "children": [
-      {"label": "How to apply", "href": "/admissions.html#how-to-apply"},
-      {"label": "Requirements", "href": "/admissions.html#requirements"},
-      {"label": "Fees & downloads", "href": "/admissions.html#fees"}
+    {"label": "About", "href": "about.html"},
+    {"label": "Academics", "href": "academics.html"},
+    {"label": "Boarding", "href": "boarding.html"},
+    {"label": "Admissions", "href": "admissions.html", "children": [
+      {"label": "How to apply", "href": "admissions.html#how-to-apply"},
+      {"label": "Requirements", "href": "admissions.html#requirements"},
+      {"label": "Fees & downloads", "href": "admissions.html#fees"}
     ]},
-    {"label": "Student Life", "href": "/student-life.html"},
-    {"label": "Gallery", "href": "/gallery.html"}
+    {"label": "Student Life", "href": "student-life.html"},
+    {"label": "Gallery", "href": "gallery.html"}
   ],
   "mobile_extra": [
-    {"label": "Resources", "href": "/resources.html"},
-    {"label": "Contact", "href": "/contact.html"}
+    {"label": "Resources", "href": "resources.html"},
+    {"label": "Contact", "href": "contact.html"}
   ]
 }

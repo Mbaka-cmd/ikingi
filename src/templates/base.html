@@ -25,7 +25,7 @@
   <meta name="twitter:title" content="{{ title }}">
   <meta name="twitter:description" content="{{ description }}">
   <meta name="theme-color" content="#17324d">
-  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" href="{{ base_path }}/static/css/main.css">
 {% if jsonld %}
   <script type="application/ld+json">{{ jsonld|safe }}</script>
 {% endif %}
@@ -40,7 +40,7 @@
   </main>
   {% include "templates/partials/footer.html" %}
   {% include "templates/partials/action-bar.html" %}
-  <script src="/static/js/site.js" defer></script>
+  <script src="{{ base_path }}/static/js/site.js" defer></script>
 {% block scripts %}{% endblock %}
 </body>
 </html>
