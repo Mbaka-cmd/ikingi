@@ -321,11 +321,9 @@ def url_for(filename):
     """Return a deployment-aware URL for a generated page."""
     filename = "" if filename is None else str(filename).strip()
 
-    # Home
     if filename in ("", "/", "index.html"):
         return site_path("/")
 
-    # Remove leading slash so every page goes through BASE_PATH
     filename = filename.lstrip("/")
 
     # Preserve fragments such as admissions.html#how-to-apply
@@ -334,7 +332,6 @@ def url_for(filename):
         return site_path(f"/{page}") + f"#{fragment}"
 
     return site_path(f"/{filename}")
-
 def build():
     if DIST.exists():
         shutil.rmtree(DIST)
@@ -379,9 +376,7 @@ def build():
     }
 
     env = Environment(
-        loader=FileSystemLoader(str(SRC)
-# Make deployment-aware URL helper available inside Jinja templates.
-env.globals["url_for"] = url_for),
+        loader=FileSystemLoader(str(SRC)),
         autoescape=select_autoescape(["html"]),
         trim_blocks=True,
         lstrip_blocks=True,
