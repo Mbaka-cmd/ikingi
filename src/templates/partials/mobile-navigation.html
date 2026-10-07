@@ -9,7 +9,7 @@
   <nav aria-label="Mobile">
     <ul class="mobile-list">
     {% for item in nav.main + nav.mobile_extra %}
-      <li><a href="{{ url_for(item.href) }}"{% if item.href == page_url %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+      <li><a href="{{ site_path(item.href) }}"{% if item.href == page_url %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
     {% endfor %}
     </ul>
   </nav>
