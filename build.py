@@ -57,10 +57,24 @@ def find_images():
     """Map image folder -> list of public URLs for photos that actually exist."""
     out = {}
     root = SRC / "static" / "images"
+
+    # Git does not preserve empty directories.
+    # If no images have been added yet, return an empty image map.
+    if not root.exists():
+        return out
+
     for d in sorted(p for p in root.iterdir() if p.is_dir()):
-        files = sorted(f for f in d.iterdir() if f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp"))
+        files = sorted(
+            f for f in d.iterdir()
+            if f.suffix.lower() in (".jpg", ".jpeg", ".png", ".webp")
+        )
         if files:
-            out[d.name] = [f"/static/images/{d.name}/{f.name}" for f in files]
+            out[d.name] = [
+                f"/static/images/{d.name}/{f.name}"
+                for f in files
+            ]
+
+    return out
     return out
 def build_jsonld(s):
     """schema.org School data. Only confirmed facts are included."""
