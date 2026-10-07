@@ -319,8 +319,18 @@ def seo_audit(pages, school):
 
 def url_for(filename):
     """Return a deployment-aware URL for a generated page."""
-    if filename == "index.html":
+    filename = "" if filename is None else str(filename).strip()
+
+    if filename in ("", "/", "index.html"):
         return site_path("/")
+
+    filename = filename.lstrip("/")
+
+    # Preserve fragments such as admissions.html#how-to-apply
+    if "#" in filename:
+        page, fragment = filename.split("#", 1)
+        return site_path(f"/{page}") + f"#{fragment}"
+
     return site_path(f"/{filename}")
 def build():
     if DIST.exists():
