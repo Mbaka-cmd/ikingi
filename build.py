@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Static site builder: JSON data + Jinja2 templates + static assets -> dist/."""
 
 import json
@@ -318,17 +318,10 @@ def seo_audit(pages, school):
 # ---------------------------------------------------------------------
 
 def url_for(filename):
-    """Return deployment-aware URL for a generated page."""
+    """Return a deployment-aware URL for a generated page."""
     if filename == "index.html":
         return site_path("/")
-
     return site_path(f"/{filename}")
-
-
-# ---------------------------------------------------------------------
-# Build
-# ---------------------------------------------------------------------
-
 def build():
     if DIST.exists():
         shutil.rmtree(DIST)
