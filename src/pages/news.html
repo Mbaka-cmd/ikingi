@@ -1,0 +1,29 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | News" %}
+{% set description = "News and events from " ~ school.name ~ " in " ~ school.location ~ "." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, paras with context %}
+
+{{ page_header('News & events', 'News & events', 'Updates from ' ~ school.name ~ '.') }}
+
+{% set published = news['items']|selectattr('status','equalto','published')|list %}
+<section class="section" aria-label="News">
+  <div class="container narrow">
+    {% if published %}
+    {% for n in published %}
+    <article class="news-article" id="{{ n.slug or ('news-' ~ loop.index) }}">
+      <p class="news-date">{{ n.date }}{% if n.category %} · {{ n.category }}{% endif %}</p>
+      <h2>{{ n.title }}</h2>
+      {% if n.image %}<img src="{{ n.image }}" alt="{{ n.title }}" loading="lazy">{% endif %}
+      {% if n.excerpt %}<p class="lead">{{ n.excerpt }}</p>{% endif %}
+      {% if n.content %}<div class="news-body">{{ paras(n.content) }}</div>{% endif %}
+    </article>
+    {% endfor %}
+    {% else %}
+    <p class="news-empty">School updates will appear here.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% include "templates/partials/final-cta.html" %}
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Academics" %}
+{% set description = "Academic information for parents of " ~ school.name ~ " in " ~ school.location ~ "." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, info_section, list_section, contact_panel with context %}
+
+{{ page_header('Academics', 'Academics', 'Academic information for parents of ' ~ school.name ~ '.', (images.academics or [none])[0]) }}
+
+{% set has_any = academics.overview or academics.curriculum or academics.learningAreas or academics.teaching or academics.assessment or academics.support %}
+{{ info_section('overview', 'Academic overview', academics.overview) }}
+{{ info_section('curriculum', 'Curriculum', academics.curriculum, true) }}
+{{ list_section('learning-areas', 'Learning areas', academics.learningAreas) }}
+{{ info_section('teaching', 'Teaching and learning', academics.teaching, true) }}
+{{ info_section('assessment', 'Assessment', academics.assessment) }}
+{{ info_section('support', 'Academic support', academics.support, true) }}
+
+{% if has_any %}
+{% include "templates/partials/final-cta.html" %}
+{% else %}
+{{ contact_panel('academics-contact', 'Questions about academics?', 'To learn about the school’s academic programme, please contact the school directly.') }}
+{% endif %}
+{% endblock %}

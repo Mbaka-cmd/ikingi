@@ -1,0 +1,53 @@
+{% macro page_header(eyebrow, title, lead='', img=none) %}
+<section class="page-header">
+  {% if img %}<img class="page-header-img" src="{{ img }}" alt="" fetchpriority="high">{% endif %}
+  <div class="container">
+    <p class="eyebrow">{{ eyebrow }}</p>
+    <h1>{{ title }}</h1>
+    {% if lead %}<p class="page-lead">{{ lead }}</p>{% endif %}
+  </div>
+</section>
+{% endmacro %}
+
+{% macro paras(text) %}{% for p in text.split('\n\n') %}{% if p.strip() %}<p>{{ p.strip() }}</p>{% endif %}{% endfor %}{% endmacro %}
+
+{% macro info_section(id, title, text, alt=false) %}
+{% if text %}
+<section class="section info-section{% if alt %} section-alt{% endif %}" id="{{ id }}" aria-labelledby="{{ id }}-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="{{ id }}-title">{{ title }}</h2>
+    <div class="info-body">{{ paras(text) }}</div>
+  </div>
+</section>
+{% endif %}
+{% endmacro %}
+
+{% macro list_section(id, title, items, alt=false) %}
+{% if items %}
+<section class="section info-section{% if alt %} section-alt{% endif %}" id="{{ id }}" aria-labelledby="{{ id }}-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="{{ id }}-title">{{ title }}</h2>
+    <div class="info-body">
+      <ul class="check-list">
+        {% for i in items %}<li>{{ i }}</li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endmacro %}
+
+{% macro contact_panel(id, title, text) %}
+<section class="section" id="{{ id }}" aria-labelledby="{{ id }}-title">
+  <div class="container narrow contact-panel" data-reveal>
+    <h2 id="{{ id }}-title">{{ title }}</h2>
+    <p class="lead">{{ text }}</p>
+    <div class="btn-row">
+      {% if school.tel_href %}<a class="btn btn-primary" href="{{ school.tel_href }}">Call school</a>{% endif %}
+      {% if school.wa_href %}<a class="btn btn-primary" href="{{ school.wa_href }}" target="_blank" rel="noopener">Chat on WhatsApp</a>{% endif %}
+      <a class="btn btn-outline" href="/contact.html">Contact school</a>
+      <a class="btn btn-outline" href="/admissions.html">View admissions</a>
+    </div>
+  </div>
+</section>
+{% endmacro %}

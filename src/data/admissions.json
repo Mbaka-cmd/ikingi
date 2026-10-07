@@ -1,0 +1,19 @@
+{
+  "status": "default_process_pending_school_confirmation",
+  "intro": "",
+  "whoCanApply": "",
+  "steps": [
+    {"n": "01", "title": "Get information"},
+    {"n": "02", "title": "Get application form"},
+    {"n": "03", "title": "Complete requirements"},
+    {"n": "04", "title": "Submit / contact school"},
+    {"n": "05", "title": "Admission confirmation"},
+    {"n": "06", "title": "Report to school"}
+  ],
+  "requirements": [],
+  "boardingRequirements": [],
+  "uniform": [],
+  "whatToBring": [],
+  "importantDates": [],
+  "faqs": []
+}

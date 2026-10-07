@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <meta name="description" content="{{ description }}">
+{% if noindex %}
+  <meta name="robots" content="noindex, nofollow">
+{% endif %}
+{% if school.site_url %}
+  <link rel="canonical" href="{{ school.site_url }}{{ page_url }}">
+  <meta property="og:url" content="{{ school.site_url }}{{ page_url }}">
+{% endif %}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ school.name }}">
+  <meta property="og:title" content="{{ title }}">
+  <meta property="og:description" content="{{ description }}">
+{% if school.site_url and school.ogImage %}
+  <meta property="og:image" content="{{ school.site_url }}{{ school.ogImage }}">
+  <meta name="twitter:card" content="summary_large_image">
+{% else %}
+  <meta name="twitter:card" content="summary">
+{% endif %}
+  <meta name="twitter:title" content="{{ title }}">
+  <meta name="twitter:description" content="{{ description }}">
+  <meta name="theme-color" content="#17324d">
+  <link rel="stylesheet" href="/static/css/main.css">
+{% if jsonld %}
+  <script type="application/ld+json">{{ jsonld|safe }}</script>
+{% endif %}
+{% block head %}{% endblock %}
+</head>
+<body class="page-{{ page|replace('.html','') }}">
+  <a class="skip-link" href="#main">Skip to main content</a>
+  {% include "templates/partials/header.html" %}
+  {% include "templates/partials/mobile-navigation.html" %}
+  <main id="main" tabindex="-1">
+    {% block content %}{% endblock %}
+  </main>
+  {% include "templates/partials/footer.html" %}
+  {% include "templates/partials/action-bar.html" %}
+  <script src="/static/js/site.js" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

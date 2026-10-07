@@ -1,0 +1,17 @@
+{% extends "templates/base.html" %}
+{% set title = "Page not found | " ~ school.name %}
+{% set description = "The page you are looking for does not exist or may have moved. Go back to the " ~ school.name ~ " website." %}
+{% set noindex = true %}
+{% block content %}
+<section class="section">
+  <div class="container narrow" style="text-align:center">
+    <p class="eyebrow">Error 404</p>
+    <h1>Page not found</h1>
+    <p class="lead" style="margin-inline:auto">The page you’re looking for doesn’t exist or may have moved.</p>
+    <div class="btn-row" style="justify-content:center">
+      <a class="btn btn-primary" href="/">Back home</a>
+      <a class="btn btn-outline" href="/contact.html">Contact school</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

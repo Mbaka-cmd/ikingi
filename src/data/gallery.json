@@ -1,0 +1,7 @@
+{
+  "items": [
+    {"src": "/static/images/gallery/photo1.jpg", "alt": "Describe photo 1", "caption": "", "category": "Campus"},
+    {"src": "/static/images/gallery/photo2.jpg", "alt": "Describe photo 2", "caption": "", "category": "Sports"},
+    {"src": "/static/images/gallery/photo3.jpg", "alt": "Describe photo 3", "caption": "", "category": "Campus"}
+  ]
+}

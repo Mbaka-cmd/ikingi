@@ -1,0 +1,23 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Student Life" %}
+{% set description = "Student life at " ~ school.name ~ " in " ~ school.location ~ "." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, info_section, contact_panel with context %}
+
+{{ page_header('Student life', 'Student life', 'Life beyond the classroom at ' ~ school.name ~ '.', (images['student-life'] or [none])[0]) }}
+
+{% set sl = student_life %}
+{% set has_any = sl.sports or sl.clubs or sl.musicDrama or sl.leadership or sl.christianLife or sl.community %}
+{{ info_section('sports', 'Sports', sl.sports) }}
+{{ info_section('clubs', 'Clubs and activities', sl.clubs, true) }}
+{{ info_section('music-drama', 'Music and drama', sl.musicDrama) }}
+{{ info_section('leadership', 'Student leadership', sl.leadership, true) }}
+{{ info_section('christian-life', 'Christian life', sl.christianLife) }}
+{{ info_section('community', 'Community activities', sl.community, true) }}
+
+{% if has_any %}
+{% include "templates/partials/final-cta.html" %}
+{% else %}
+{{ contact_panel('student-life-contact', 'Questions about school life?', 'To learn about activities at ' ~ school.shortName ~ ', please contact the school directly.') }}
+{% endif %}
+{% endblock %}

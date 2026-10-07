@@ -1,0 +1,17 @@
+<div class="mobile-backdrop" data-menu-close></div>
+<div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="mobile-menu-head">
+    <span class="brand-name">{{ school.shortName }}</span>
+    <button class="menu-close" type="button" aria-label="Close menu" data-menu-close>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <nav aria-label="Mobile">
+    <ul class="mobile-list">
+    {% for item in nav.main + nav.mobile_extra %}
+      <li><a href="{{ item.href }}"{% if item.href == page_url %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+    {% endfor %}
+    </ul>
+  </nav>
+  <a class="btn btn-accent btn-block" href="/admissions.html#how-to-apply">Apply now</a>
+</div>

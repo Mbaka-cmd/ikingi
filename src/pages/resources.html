@@ -1,0 +1,30 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Resources" %}
+{% set description = "Official downloads from " ~ school.name ~ ": admission form, fee structure and other documents." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, contact_panel with context %}
+
+{{ page_header('Resources', 'Resources', 'Official documents from ' ~ school.name ~ '.') }}
+
+{% set doc_labels = [('admission-form','Admission form'),('admission-instructions','Admission instructions'),('fee-structure','Fee structure'),('uniform-requirements','Uniform requirements'),('boarding-requirements','Boarding requirements'),('school-calendar','School calendar'),('parent-information','Parent information')] %}
+{% set ns = namespace(any=false) %}
+{% for stem, label in doc_labels %}{% if stem in docs %}{% set ns.any = true %}{% endif %}{% endfor %}
+
+{% if ns.any %}
+<section class="section" id="downloads" aria-labelledby="downloads-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="downloads-title">Downloads</h2>
+    <div class="info-body">
+      <ul class="download-list">
+        {% for stem, label in doc_labels %}{% if stem in docs %}
+        <li><a href="{{ docs[stem] }}" download>{{ label }}</a></li>
+        {% endif %}{% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% include "templates/partials/final-cta.html" %}
+{% else %}
+{{ contact_panel('resources-contact', 'Need a document?', 'Official documents will be listed here. In the meantime, please contact the school directly to request what you need.') }}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,46 @@
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-about">
+      <p class="footer-title">{{ school.name }}</p>
+      <p>{{ school.location }}</p>
+    </div>
+    <div>
+      <p class="footer-heading">Quick links</p>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/academics.html">Academics</a></li>
+        <li><a href="/boarding.html">Boarding</a></li>
+        <li><a href="/admissions.html">Admissions</a></li>
+        <li><a href="/gallery.html">Gallery</a></li>
+        <li><a href="/news.html">News</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Admissions</p>
+      <ul>
+        <li><a href="/admissions.html#how-to-apply">How to apply</a></li>
+        <li><a href="/admissions.html#requirements">Requirements</a></li>
+        <li><a href="/admissions.html#fees">Fees</a></li>
+        <li><a href="/resources.html">Downloads</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-heading">Contact</p>
+      <ul>
+        {% if school.phone %}<li><a href="{{ school.tel_href }}">{{ school.phone }}</a></li>{% endif %}
+        {% if school.wa_href %}<li><a href="{{ school.wa_href }}" target="_blank" rel="noopener">WhatsApp</a></li>{% endif %}
+        {% if school.email %}<li><a href="mailto:{{ school.email }}">{{ school.email }}</a></li>{% endif %}
+        {% if school.postalAddress %}<li>{{ school.postalAddress }}</li>{% endif %}
+        <li>{{ school.locality }}, {{ school.county }}</li>
+        {% if school.mapsUrl %}<li><a href="{{ school.mapsUrl }}" target="_blank" rel="noopener">View on map</a></li>{% endif %}
+        {% for name, url in school.social.items() %}<li><a href="{{ url }}" target="_blank" rel="noopener">{{ name|capitalize }}</a></li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; {{ year }} {{ school.name }}</p>
+    <p><a href="/privacy.html">Privacy policy</a> · <a href="/privacy.html#accessibility">Accessibility</a> · Website by Adalyn Technologies</p>
+  </div>
+</footer>

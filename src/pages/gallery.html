@@ -1,0 +1,51 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Gallery" %}
+{% set description = "Photo gallery of " ~ school.name ~ " in " ~ school.location ~ "." %}
+{% set photos = gallery['items']|selectattr('alt')|list %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header with context %}
+
+{{ page_header('Gallery', 'Gallery', 'Photographs from ' ~ school.name ~ '.') }}
+
+{% set ns = namespace(cats=[]) %}
+{% for p in photos %}{% if p.category and p.category not in ns.cats %}{% set ns.cats = ns.cats + [p.category] %}{% endif %}{% endfor %}
+
+<section class="section" aria-label="Photo gallery">
+  <div class="container">
+    {% if photos %}
+    {% if ns.cats|length > 1 %}
+    <div class="filter-bar" role="group" aria-label="Filter photos by category">
+      <button type="button" class="btn btn-sm btn-outline" data-filter="all" aria-pressed="true">All</button>
+      {% for c in ns.cats %}<button type="button" class="btn btn-sm btn-outline" data-filter="{{ c }}" aria-pressed="false">{{ c }}</button>{% endfor %}
+    </div>
+    {% endif %}
+    <div class="gal-grid" id="gallery-grid">
+      {% for p in photos %}
+      <button type="button" class="gal-item" data-full="{{ p.full or p.src }}" data-alt="{{ p.alt }}" data-caption="{{ p.caption }}" data-category="{{ p.category }}" aria-label="View larger: {{ p.alt }}">
+        <img src="{{ p.src }}" alt="{{ p.alt }}" loading="lazy">
+      </button>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="news-empty">Photos from the school will appear here.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% if photos %}
+<dialog class="lightbox" id="lightbox" aria-label="Photo viewer">
+  <button type="button" class="lb-btn lb-close" aria-label="Close photo viewer">&times;</button>
+  <button type="button" class="lb-btn lb-prev" aria-label="Previous photo">&#8249;</button>
+  <figure class="lb-figure">
+    <img id="lb-img" src="" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+  <button type="button" class="lb-btn lb-next" aria-label="Next photo">&#8250;</button>
+</dialog>
+{% endif %}
+
+{% include "templates/partials/final-cta.html" %}
+{% endblock %}
+{% block scripts %}
+{% if photos %}<script src="/static/js/gallery.js" defer></script>{% endif %}
+{% endblock %}

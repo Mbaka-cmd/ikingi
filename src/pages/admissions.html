@@ -1,0 +1,142 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Admissions" %}
+{% set description = "How to apply to " ~ school.name ~ ": the admission steps, requirements, fees information and how to contact the school." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, info_section, list_section with context %}
+
+{% set doc_labels = [('admission-form','Admission form'),('admission-instructions','Admission instructions'),('fee-structure','Fee structure'),('uniform-requirements','Uniform requirements'),('boarding-requirements','Boarding requirements')] %}
+{% set ns = namespace(docs=false) %}
+{% for stem, label in doc_labels %}{% if stem in docs %}{% set ns.docs = true %}{% endif %}{% endfor %}
+
+{{ page_header('Admissions', 'Admissions', 'Joining ' ~ school.name ~ ', step by step.') }}
+
+<nav class="jump-nav" aria-label="On this page">
+  <div class="container">
+    <ul>
+      <li><a href="#how-to-apply">How to apply</a></li>
+      <li><a href="#requirements">Requirements</a></li>
+      <li><a href="#fees">Fees</a></li>
+      {% if ns.docs %}<li><a href="#downloads">Downloads</a></li>{% endif %}
+      {% if admissions.faqs %}<li><a href="#faqs">FAQs</a></li>{% endif %}
+      <li><a href="#contact-admissions">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+{% set intro = admissions.intro or ('Admission to ' ~ school.name ~ ' is arranged through the school. This page explains the steps to follow and where to get information. For anything not covered here, please contact the school directly.') %}
+{{ info_section('admissions-intro', 'Introduction', intro) }}
+{{ info_section('who-can-apply', 'Who can apply', admissions.whoCanApply, true) }}
+
+<section class="section" id="how-to-apply" aria-labelledby="how-to-apply-title">
+  <div class="container" data-reveal>
+    <div class="section-head">
+      <p class="eyebrow">The process</p>
+      <h2 id="how-to-apply-title">How to apply</h2>
+    </div>
+    <ol class="steps">
+      {% for s in admissions.steps %}
+      <li><span class="step-n">{{ s.n }}</span><span class="step-t">{{ s.title }}</span></li>
+      {% endfor %}
+    </ol>
+    <div class="btn-row">
+      {% if 'admission-form' in docs %}<a class="btn btn-primary" href="{{ docs['admission-form'] }}" download>Download admission form</a>{% endif %}
+      {% if school.tel_href %}<a class="btn btn-outline" href="{{ school.tel_href }}">Call school</a>{% endif %}
+      {% if school.wa_href %}<a class="btn btn-outline" href="{{ school.wa_href }}" target="_blank" rel="noopener">Chat on WhatsApp</a>{% endif %}
+      <a class="btn btn-outline" href="/contact.html">Contact school</a>
+    </div>
+  </div>
+</section>
+
+{% if admissions.requirements %}
+{{ list_section('requirements', 'Requirements', admissions.requirements, true) }}
+{% else %}
+<section class="section info-section section-alt" id="requirements" aria-labelledby="requirements-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="requirements-title">Requirements</h2>
+    <div class="info-body"><p>The school confirms its admission requirements directly. Please contact the school to find out what is needed before you apply.</p></div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section info-section" id="fees" aria-labelledby="fees-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="fees-title">Fees</h2>
+    <div class="info-body">
+      {% if fees.status == 'confirmed' and fees.terms %}
+      <div class="table-wrap">
+        <table class="fee-table">
+          <caption class="visually-hidden">School fees, {{ fees.year }}, in {{ fees.currency }}</caption>
+          <thead><tr><th scope="col">Term</th><th scope="col">Amount ({{ fees.currency }})</th><th scope="col">Notes</th></tr></thead>
+          <tbody>
+            {% for t in fees.terms %}
+            <tr><th scope="row">{{ t.term }}</th><td>{{ "{:,}".format(t.amount) }}</td><td>{{ t.notes }}</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p>For the school’s current fee structure, please contact the school directly.</p>
+      {% endif %}
+      {% if 'fee-structure' in docs %}<p><a class="btn btn-primary" href="{{ docs['fee-structure'] }}" download>Download fee structure</a></p>{% endif %}
+    </div>
+  </div>
+</section>
+
+{{ list_section('boarding-requirements', 'Boarding requirements', admissions.boardingRequirements, true) }}
+{{ list_section('uniform', 'Uniform', admissions.uniform) }}
+{{ list_section('what-to-bring', 'What to bring', admissions.whatToBring, true) }}
+
+{% if admissions.importantDates %}
+<section class="section info-section" id="important-dates" aria-labelledby="important-dates-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="important-dates-title">Important dates</h2>
+    <div class="info-body">
+      <dl class="profile-list">
+        {% for d in admissions.importantDates %}<div><dt>{{ d.label }}</dt><dd>{{ d.date }}</dd></div>{% endfor %}
+      </dl>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if ns.docs %}
+<section class="section info-section section-alt" id="downloads" aria-labelledby="downloads-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="downloads-title">Downloads</h2>
+    <div class="info-body">
+      <ul class="download-list">
+        {% for stem, label in doc_labels %}{% if stem in docs %}
+        <li><a href="{{ docs[stem] }}" download>{{ label }}</a></li>
+        {% endif %}{% endfor %}
+      </ul>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if admissions.faqs %}
+<section class="section info-section" id="faqs" aria-labelledby="faqs-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="faqs-title">Frequently asked questions</h2>
+    <div class="info-body faq">
+      {% for f in admissions.faqs %}
+      <details><summary>{{ f.q }}</summary><p>{{ f.a }}</p></details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="final-cta" id="contact-admissions" aria-labelledby="contact-admissions-title">
+  <div class="container final-cta-inner">
+    <h2 id="contact-admissions-title">Contact admissions</h2>
+    <p>For admission enquiries, contact {{ school.name }} directly.</p>
+    <div class="btn-row">
+      {% if school.tel_href %}<a class="btn btn-accent" href="{{ school.tel_href }}">Call school</a>{% endif %}
+      {% if school.wa_href %}<a class="btn btn-accent" href="{{ school.wa_href }}" target="_blank" rel="noopener">Chat on WhatsApp</a>{% endif %}
+      {% if school.email %}<a class="btn btn-light-outline" href="mailto:{{ school.email }}">Email school</a>{% endif %}
+      <a class="btn btn-light-outline" href="/contact.html">Contact school</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

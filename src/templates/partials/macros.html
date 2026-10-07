@@ -1,0 +1,19 @@
+{% macro teaser(id, label, title, text, href, cta, alt_name, flip=false, imgs=none) %}
+<section class="section{% if flip %} section-alt{% endif %}" id="{{ id }}" aria-labelledby="{{ id }}-title">
+  <div class="container split{% if flip %} split-flip{% endif %}" data-reveal>
+    <div class="split-text">
+      <p class="eyebrow">{{ label }}</p>
+      <h2 id="{{ id }}-title">{{ title }}</h2>
+      <p class="lead">{{ text }}</p>
+      <a class="btn btn-outline" href="{{ href }}">{{ cta }}</a>
+    </div>
+    <div class="split-media">
+      {% if imgs %}
+      <img src="{{ imgs[0] }}" alt="{{ label }} at {{ alt_name }}" loading="lazy">
+      {% else %}
+      <div class="media-panel" aria-hidden="true"><span>{{ label }}</span></div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endmacro %}

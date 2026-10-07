@@ -1,0 +1,37 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Boarding" %}
+{% set description = "Boarding at " ~ school.name ~ ": information for parents on boarding life, requirements and what to bring." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, info_section, list_section, contact_panel with context %}
+
+{{ page_header('Boarding', 'Boarding at ' ~ school.shortName, school.name ~ ' is a boarding school. This page is for parents who want to understand boarding.', (images.boarding or [none])[0]) }}
+
+{% set has_doc = 'boarding-requirements' in docs %}
+{% set has_any = boarding.overview or boarding.life or boarding.accommodation or boarding.meals or boarding.welfare or boarding.discipline or boarding.whatToBring or boarding.parentInfo or has_doc %}
+{{ info_section('overview', 'Boarding overview', boarding.overview) }}
+{{ info_section('life', 'Life in boarding', boarding.life, true) }}
+{{ info_section('accommodation', 'Accommodation', boarding.accommodation) }}
+{{ info_section('meals', 'Meals', boarding.meals, true) }}
+{{ info_section('welfare', 'Student welfare', boarding.welfare) }}
+{{ info_section('discipline', 'Discipline and conduct', boarding.discipline, true) }}
+{{ list_section('what-to-bring', 'What to bring', boarding.whatToBring) }}
+{{ info_section('parent-information', 'Parent information', boarding.parentInfo, true) }}
+
+{% if has_doc %}
+<section class="section" id="boarding-download" aria-labelledby="boarding-download-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="boarding-download-title">Boarding requirements</h2>
+    <div class="info-body">
+      <p>The school’s official boarding requirements are available to download.</p>
+      <a class="btn btn-primary" href="{{ docs['boarding-requirements'] }}" download>Download boarding requirements</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if has_any %}
+{% include "templates/partials/final-cta.html" %}
+{% else %}
+{{ contact_panel('boarding-contact', 'Questions about boarding?', 'For information about boarding at ' ~ school.shortName ~ ', please contact the school directly.') }}
+{% endif %}
+{% endblock %}

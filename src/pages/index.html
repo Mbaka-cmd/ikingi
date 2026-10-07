@@ -1,0 +1,144 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Magumoni, Tharaka-Nithi" %}
+{% set description = school.name ~ " in Magumoni, Tharaka-Nithi County, Kenya. Learn about the school, boarding, admissions and how to get in touch." %}
+{% block content %}
+{% from "templates/partials/macros.html" import teaser %}
+
+<section class="hero" aria-labelledby="hero-title">
+  {% if images.hero %}<img class="hero-img" src="{{ images.hero[0] }}" alt="" fetchpriority="high">{% endif %}
+  <div class="container hero-inner">
+    <h1 id="hero-title">{{ school.name }}</h1>
+    <p class="hero-loc">{{ school.location }}</p>
+    <div class="btn-row">
+      <a class="btn btn-accent" href="#welcome">Explore our school</a>
+      <a class="btn btn-light-outline" href="/admissions.html">Admissions</a>
+    </div>
+  </div>
+</section>
+
+<section class="trust" aria-label="School at a glance">
+  <div class="container">
+    <ul class="trust-list">
+      <li><span>School type</span><strong>Boarding</strong></li>
+      <li><span>Education</span><strong>Primary</strong></li>
+      <li><span>Location</span><strong>{{ school.locality }}, {{ school.county|replace(' County','') }}</strong></li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="welcome" aria-labelledby="welcome-title">
+  <div class="container narrow" data-reveal>
+    <p class="eyebrow">Welcome</p>
+    <h2 id="welcome-title">Welcome to {{ school.name }}</h2>
+    <p class="lead">{{ school.name }} is a primary school with boarding in {{ school.location }}. This website helps parents learn about the school, how admissions work and how to get in touch.</p>
+    {% if home.headteacher.message %}
+    <blockquote class="headteacher">
+      <p>{{ home.headteacher.message }}</p>
+      <footer>{{ home.headteacher.name }}{% if home.headteacher.title %}, {{ home.headteacher.title }}{% endif %}</footer>
+    </blockquote>
+    {% endif %}
+    <a class="btn btn-primary" href="/about.html">Read our story</a>
+  </div>
+</section>
+
+{% if home.whyChoose %}
+<section class="section section-alt" id="why-choose" aria-labelledby="why-title">
+  <div class="container" data-reveal>
+    <h2 id="why-title">Why choose {{ school.shortName }}</h2>
+    <div class="why-grid">
+      {% for w in home.whyChoose %}
+      <article class="why-card"><h3>{{ w.title }}</h3><p>{{ w.text }}</p></article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{{ teaser('academics', 'Academics', 'Learning at ' ~ school.shortName, "Information on the school's curriculum and learning areas for parents.", '/academics.html', 'Explore academics', school.name, false, images.academics) }}
+{{ teaser('boarding', 'Boarding', 'Boarding at ' ~ school.shortName, 'Boarding is a central part of the school. Read what parents need to know about life in boarding, requirements and what to bring.', '/boarding.html', 'Explore boarding', school.name, true, images.boarding) }}
+{{ teaser('facilities', 'Facilities', 'School facilities', "Explore the school's facilities and campus.", '/facilities.html', 'View facilities', school.name, false, images.facilities) }}
+{{ teaser('student-life', 'Student life', 'Student life', 'Explore life beyond the classroom at ' ~ school.shortName ~ '.', '/student-life.html', 'Explore student life', school.name, true, images['student-life']) }}
+
+<section class="section" id="admissions" aria-labelledby="admissions-title">
+  <div class="container" data-reveal>
+    <div class="section-head">
+      <p class="eyebrow">Admissions</p>
+      <h2 id="admissions-title">How admission works</h2>
+      <p class="lead">Applying is a step-by-step process. Follow the steps below, or contact the school directly.</p>
+    </div>
+    <ol class="steps">
+      {% for s in admissions.steps %}
+      <li><span class="step-n">{{ s.n }}</span><span class="step-t">{{ s.title }}</span></li>
+      {% endfor %}
+    </ol>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/admissions.html">View admissions</a>
+      <a class="btn btn-outline" href="/contact.html">Contact school</a>
+    </div>
+  </div>
+</section>
+
+{% set published = news['items']|selectattr('status','equalto','published')|list %}
+<section class="section section-alt" id="news" aria-labelledby="news-title">
+  <div class="container" data-reveal>
+    <div class="section-head">
+      <p class="eyebrow">News &amp; events</p>
+      <h2 id="news-title">From the school</h2>
+    </div>
+    {% if published %}
+    <div class="news-grid">
+      {% for n in published[:3] %}
+      <article class="news-card">
+        <p class="news-date">{{ n.date }}</p>
+        <h3>{{ n.title }}</h3>
+        <p>{{ n.excerpt }}</p>
+      </article>
+      {% endfor %}
+    </div>
+    <a class="btn btn-outline" href="/news.html">All news</a>
+    {% else %}
+    <p class="news-empty">School updates will appear here.</p>
+    {% endif %}
+  </div>
+</section>
+
+{% set gal = gallery['items'] %}
+{% if gal %}
+<section class="section" id="gallery-preview" aria-labelledby="gallery-title">
+  <div class="container" data-reveal>
+    <div class="section-head">
+      <p class="eyebrow">Gallery</p>
+      <h2 id="gallery-title">Life at {{ school.shortName }}</h2>
+    </div>
+    <div class="gallery-preview">
+      {% for g in gal[:6] %}
+      <figure><img src="{{ g.src }}" alt="{{ g.alt }}" loading="lazy"></figure>
+      {% endfor %}
+    </div>
+    <a class="btn btn-outline" href="/gallery.html">View gallery</a>
+  </div>
+</section>
+{% endif %}
+
+<section class="section section-alt" id="location" aria-labelledby="location-title">
+  <div class="container narrow" data-reveal>
+    <p class="eyebrow">Location</p>
+    <h2 id="location-title">Find us</h2>
+    <address class="location-card">
+      <strong>{{ school.name }}</strong><br>
+      {{ school.locality }}<br>
+      {{ school.county }}<br>
+      {{ school.country }}
+    </address>
+    <div class="btn-row">
+      {% if school.mapsUrl %}
+      <a class="btn btn-primary" href="{{ school.mapsUrl }}" target="_blank" rel="noopener">View on map</a>
+      <a class="btn btn-outline" href="{{ school.directionsUrl }}" target="_blank" rel="noopener">Get directions</a>
+      {% endif %}
+      <a class="btn btn-outline" href="/contact.html">Contact school</a>
+    </div>
+  </div>
+</section>
+
+{% include "templates/partials/final-cta.html" %}
+{% endblock %}

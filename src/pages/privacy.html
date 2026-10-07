@@ -1,0 +1,34 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Privacy Policy" %}
+{% set description = "Privacy policy and accessibility statement for the " ~ school.name ~ " website." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header with context %}
+
+{{ page_header('Legal', 'Privacy policy', 'How the ' ~ school.name ~ ' website handles information.') }}
+
+<section class="section" aria-label="Privacy policy">
+  <div class="container narrow prose">
+    <h2>Overview</h2>
+    <p>This is an information website for {{ school.name }}. It has no user accounts, no student or parent portal and no online registration.</p>
+
+    <h2>Information this website collects</h2>
+    <p>This website does not set cookies and does not use analytics or advertising trackers. We do not collect personal information automatically.</p>
+
+    <h2>Enquiries</h2>
+    <p>If an enquiry form is shown on the Contact page, the details you type are used only to prepare a message that opens in WhatsApp or your email app on your own device. The message is sent only if you press Send in that app. Nothing you type in the form is stored on this website.</p>
+    <p>Please do not send sensitive student information, such as birth certificates, identity documents or medical records, through this website.</p>
+
+    <h2>Hosting</h2>
+    <p>Like most websites, this site is delivered by a hosting provider, which may keep standard technical logs (for example, IP address and pages requested) for security and operation.</p>
+
+    <h2>Links to other services</h2>
+    <p>This website may link to services such as WhatsApp or Google Maps. Those services have their own privacy policies.</p>
+
+    <h2>Contact</h2>
+    <p>For questions about this policy, please <a href="/contact.html">contact the school</a>.</p>
+
+    <h2 id="accessibility">Accessibility</h2>
+    <p>We aim to make this website easy to use for everyone, including people who use a keyboard or a screen reader. If you have difficulty using any part of this website, please <a href="/contact.html">contact the school</a> and we will help you with the information you need.</p>
+  </div>
+</section>
+{% endblock %}

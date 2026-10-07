@@ -1,0 +1,22 @@
+<nav class="primary-nav" aria-label="Primary">
+  <ul class="nav-list">
+  {% for item in nav.main %}
+    {% set current = (item.href == page_url) or (item.href != '/' and item.href.split('#')[0] == page_url) %}
+    {% if item.children %}
+    <li class="has-dropdown">
+      <a class="nav-link" href="{{ item.href }}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+      <button class="dropdown-toggle" type="button" aria-expanded="false" aria-label="{{ item.label }} submenu">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+      </button>
+      <ul class="dropdown">
+        {% for c in item.children %}
+        <li><a href="{{ c.href }}">{{ c.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% else %}
+    <li><a class="nav-link" href="{{ item.href }}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a></li>
+    {% endif %}
+  {% endfor %}
+  </ul>
+</nav>

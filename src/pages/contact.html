@@ -1,0 +1,83 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Contact" %}
+{% set description = "Contact " ~ school.name ~ " in " ~ school.location ~ ": call, WhatsApp, directions and enquiry form." %}
+{% set has_form = school.wa_base or school.email %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header with context %}
+
+{{ page_header('Contact', 'Contact the school', school.location) }}
+
+<section class="section" id="contact-details" aria-labelledby="contact-details-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="contact-details-title">Get in touch</h2>
+    <div class="info-body">
+      <dl class="profile-list">
+        {% if school.phone %}<div><dt>Phone</dt><dd><a href="{{ school.tel_href }}">{{ school.phone }}</a></dd></div>{% endif %}
+        {% if school.whatsapp %}<div><dt>WhatsApp</dt><dd><a href="{{ school.wa_href }}" target="_blank" rel="noopener">{{ school.whatsapp }}</a></dd></div>{% endif %}
+        {% if school.email %}<div><dt>Email</dt><dd><a href="mailto:{{ school.email }}">{{ school.email }}</a></dd></div>{% endif %}
+        {% if school.postalAddress %}<div><dt>Postal address</dt><dd>{{ school.postalAddress }}</dd></div>{% endif %}
+        <div><dt>Location</dt><dd>{{ school.name }}, {{ school.location }}</dd></div>
+      </dl>
+      <div class="btn-row contact-actions">
+        {% if school.tel_href %}<a class="btn btn-primary" href="{{ school.tel_href }}">Call school</a>{% endif %}
+        {% if school.wa_href %}<a class="btn btn-primary" href="{{ school.wa_href }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+        {% if school.mapsUrl %}<a class="btn btn-outline" href="{{ school.mapsUrl }}" target="_blank" rel="noopener">View on map</a>{% endif %}
+        {% if school.directionsUrl %}<a class="btn btn-outline" href="{{ school.directionsUrl }}" target="_blank" rel="noopener">Get directions</a>{% endif %}
+        {% if has_form %}<a class="btn btn-outline" href="#enquiry">Send enquiry</a>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if has_form %}
+<section class="section section-alt" id="enquiry" aria-labelledby="enquiry-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="enquiry-title">Send an enquiry</h2>
+    <div class="info-body">
+      <form id="enquiry-form" class="enquiry" novalidate data-wa="{{ school.wa_base }}" data-email="{{ school.email }}" data-school="{{ school.name }}">
+        <div class="field">
+          <label for="f-name">Name <span aria-hidden="true">*</span></label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="e-name">
+          <p class="field-error" id="e-name" hidden></p>
+        </div>
+        <div class="field">
+          <label for="f-phone">Phone <span aria-hidden="true">*</span></label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="e-phone">
+          <p class="field-error" id="e-phone" hidden></p>
+        </div>
+        <div class="field">
+          <label for="f-email">Email (optional)</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="e-email">
+          <p class="field-error" id="e-email" hidden></p>
+        </div>
+        <div class="field">
+          <label for="f-type">Enquiry type</label>
+          <select id="f-type" name="type">
+            <option>Admissions</option>
+            <option>Fees</option>
+            <option>Boarding</option>
+            <option>School visit</option>
+            <option>General enquiry</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-message">Message <span aria-hidden="true">*</span></label>
+          <textarea id="f-message" name="message" rows="5" required aria-describedby="e-message"></textarea>
+          <p class="field-error" id="e-message" hidden></p>
+        </div>
+        <div class="hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+        <p class="form-note">Please do not include sensitive student information such as birth certificate numbers or medical details. When you press Send, your message opens ready to send in {% if school.wa_base %}WhatsApp{% else %}your email app{% endif %}; nothing is stored on this website. See our <a href="/privacy.html">privacy policy</a>.</p>
+        <button class="btn btn-primary" type="submit">Send enquiry</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% include "templates/partials/final-cta.html" %}
+{% endblock %}
+{% block scripts %}
+{% if has_form %}<script src="/static/js/contact.js" defer></script>{% endif %}
+{% endblock %}

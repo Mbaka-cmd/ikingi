@@ -1,0 +1,33 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | About" %}
+{% set description = "About " ~ school.name ~ ", a boarding primary school in " ~ school.location ~ "." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, info_section, list_section, contact_panel with context %}
+
+{{ page_header('About', 'About Rev. Ikingi', school.location, (images.campus or [none])[0]) }}
+
+{% set intro = about.intro or (school.name ~ ' is a primary school with boarding in ' ~ school.location ~ '.') %}
+{{ info_section('about-school', 'About the school', intro) }}
+{{ info_section('story', 'Our story', about.story, true) }}
+{{ info_section('mission', 'Mission', about.mission) }}
+{{ info_section('vision', 'Vision', about.vision, true) }}
+{{ list_section('values', 'Core values', about.coreValues) }}
+{{ info_section('sponsorship', 'Sponsorship', about.sponsorship, true) }}
+
+<section class="section" id="profile" aria-labelledby="profile-title">
+  <div class="container info-grid" data-reveal>
+    <h2 id="profile-title">School profile</h2>
+    <div class="info-body">
+      <dl class="profile-list">
+        <div><dt>School</dt><dd>{{ school.name }}</dd></div>
+        <div><dt>Type</dt><dd>Boarding primary school</dd></div>
+        <div><dt>Location</dt><dd>{{ school.location }}</dd></div>
+        {% if school.schoolCode %}<div><dt>School code</dt><dd>{{ school.schoolCode }}</dd></div>{% endif %}
+        {% for p in about.profile %}<div><dt>{{ p.label }}</dt><dd>{{ p.value }}</dd></div>{% endfor %}
+      </dl>
+    </div>
+  </div>
+</section>
+
+{% include "templates/partials/final-cta.html" %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "templates/base.html" %}
+{% set title = school.name ~ " | Facilities" %}
+{% set description = "Facilities and campus at " ~ school.name ~ " in " ~ school.location ~ "." %}
+{% block content %}
+{% from "templates/partials/page-macros.html" import page_header, contact_panel with context %}
+
+{{ page_header('Facilities', 'School facilities', 'The campus and facilities of ' ~ school.name ~ '.', (images.facilities or [none])[0]) }}
+
+{% set items = facilities['items'] %}
+{% for f in items %}
+<section class="section{% if loop.index is even %} section-alt{% endif %}" id="facility-{{ loop.index }}" aria-labelledby="facility-{{ loop.index }}-title">
+  <div class="container split{% if loop.index is even %} split-flip{% endif %}" data-reveal>
+    <div class="split-text">
+      <h2 id="facility-{{ loop.index }}-title">{{ f.name }}</h2>
+      {% if f.text %}<p class="lead">{{ f.text }}</p>{% endif %}
+    </div>
+    {% if f.image %}
+    <div class="split-media"><img src="{{ f.image }}" alt="{{ f.alt or f.name }}" loading="lazy"></div>
+    {% endif %}
+  </div>
+</section>
+{% endfor %}
+
+{% if items %}
+{% include "templates/partials/final-cta.html" %}
+{% else %}
+{{ contact_panel('facilities-contact', 'Visit the school', 'To see the school’s facilities, please contact the school to arrange a visit.') }}
+{% endif %}
+{% endblock %}
